@@ -111,6 +111,22 @@ public class InputText : MonoBehaviour
                 _navi.SetActive(true);
             }
             */
+
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                yield return null;
+
+                _entryNum++;
+                if (ideas.Length <= _entryNum)
+                {
+                    _entryNum = 0;
+                }
+                _changeNum = true;
+                yield break;
+            }
+
+
+            /*
             if (Input.GetKeyUp(KeyCode.LeftControl) || Input.GetKeyUp(KeyCode.RightControl))
             {
                 _navi.SetActive(false);
@@ -153,7 +169,7 @@ public class InputText : MonoBehaviour
                     yield break;
 
                 }
-            }
+            }*/
             yield return null;
         }
     }
