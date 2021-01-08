@@ -7,31 +7,32 @@ public class MainControl : MonoBehaviour
     public string userName = "noiva";
     private string _filePath;
 
+    [SerializeField] private GameObject InputCanvas;
+    private InputText _inputText;
+
+    private int situation = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         _filePath = ControlData.Initialized(userName);
+        _inputText = InputCanvas.GetComponent<InputText>();
+        _inputText.Initialized();
+        StartCoroutine(Input());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            ControlData.CSVAddWrite("a", "a",_filePath);
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            ControlData.CSVAddWrite("a","aa", _filePath);
-        }
+        
 
-        if (Input.GetKeyDown(KeyCode.O))
+    }
+
+    private IEnumerator Input()
+    {
+        while (true)
         {
-            Debug.Log("game " + ControlData.CheckIdeaOverlapInGame("a", "a", "a", "a"));
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Debug.Log("CSV   "+ ControlData.CheckIdeaOverlapInCSV("a", "a", "a", "a"));
+            yield return StartCoroutine(_inputText.InputControl());
         }
     }
 }
