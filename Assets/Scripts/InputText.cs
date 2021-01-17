@@ -11,13 +11,13 @@ public class InputText : MonoBehaviour
     public InputField[] fields = new InputField[4];
 
     private int _entryNum = 0;
-    private bool _changeNum = false;
+    private bool _changeNum = false, _interruption = false;
 
-    [SerializeField] private GameObject _navi;
+   // [SerializeField] private GameObject _navi;
 
     public void Initialized()
     {
-        _navi.SetActive(false);
+        //_navi.SetActive(false);
         IdeasInitialized();
     }
 
@@ -31,12 +31,19 @@ public class InputText : MonoBehaviour
         _entryNum = 0;
     }
 
-    public IEnumerator InputControl()
+    public IEnumerator InputControl(Action<bool, string[]> action)
     {
         while (true)
         {
 
             yield return StartCoroutine(InputIdea(_entryNum));
+
+            if (_interruption)
+            {
+                _interruption = false;
+                action(false, null);
+                yield break;
+            }
 
             if (_changeNum)
             {
@@ -61,7 +68,9 @@ public class InputText : MonoBehaviour
             }
 
             //入力完了後の処理追加
+            action(false,ideas);
             IdeasInitialized();
+
             yield break;
         }
 
@@ -82,10 +91,18 @@ public class InputText : MonoBehaviour
             fields[ideasNum].text = ideas[ideasNum];
         }
 
-        Debug.Log(ideasNum);
+        //Debug.Log(ideasNum);
 
         while (true)
         {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                yield return null;
+                _interruption = true;
+                yield break;
+            }
+
+
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 yield return null;
@@ -97,7 +114,7 @@ public class InputText : MonoBehaviour
                 {
                     debug += i + "番目に" + ideas[i] + "が、　";
                 }
-                Debug.Log(debug);
+                //Debug.Log(debug);
                 yield break;       
             }
 
@@ -172,5 +189,10 @@ public class InputText : MonoBehaviour
             }*/
             yield return null;
         }
+    }
+    public void TimeUp()
+    {
+        StopAllCoroutines();
+        gameObject.SetActive(false);
     }
 }
