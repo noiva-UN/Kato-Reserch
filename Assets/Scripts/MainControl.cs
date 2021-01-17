@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainControl : MonoBehaviour
@@ -51,9 +52,9 @@ public class MainControl : MonoBehaviour
       // Start is called before the first frame update
     void Start()
     {
-        _filePath = ControlData.Initialized(ControlData.filetype.normal);
+       // ControlData.Initialized(ControlData.filetype.normal);
 
-        ControlData.Initialized(ControlData.filetype.favorite);
+        //ControlData.Initialized(ControlData.filetype.favorite);
         _star = ControlData.FavoriteIdeNum();
         _Score = 0;
         _idea = 0;
@@ -239,6 +240,7 @@ public class MainControl : MonoBehaviour
             {
                 case 2:
                     //タイトル行きの処理
+                    SceneManager.LoadScene("MainGame");
                     Debug.Log("title");
                     break;
                 case 1:

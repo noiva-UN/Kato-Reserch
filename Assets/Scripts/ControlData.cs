@@ -35,7 +35,6 @@ public static class ControlData
     static void SetCSVandData(string data,filetype type)
     {
         var filePath = path + "/" + type.ToString() + ".csv";
-        var count = 0;
 
         if (File.Exists(filePath))
         {
@@ -45,7 +44,6 @@ public static class ControlData
             {
                 if (csvDatas[i][0] == " ")
                 {
-                    count++;
                     if (type == filetype.normal)
                     {
                         i++;
@@ -63,8 +61,7 @@ public static class ControlData
             highScore = hegh;
 
             var sw = new StreamWriter(filePath, true, Encoding.GetEncoding("UTF-8"));
-            string[] s1 = { " ", "第" + count + "回", hegh.ToString(), data };
-            count++;
+            string[] s1 = { " ", "0", hegh.ToString(), data };
             var s2 = string.Join(",", s1);
             sw.WriteLine(s2);
             sw.Close();
@@ -76,8 +73,7 @@ public static class ControlData
             string fixedFormText = "○○が,××して,□□を,△△する,ゲーム";
             sw.WriteLine(fixedFormText);
 
-            string[]s1 = {" ", "第1回", "0", data };
-            count = 2;
+            string[]s1 = {" ", "0", "0", data };
             var s2 = string.Join(",", s1);
             sw.WriteLine(s2);
             sw.Close();
@@ -237,5 +233,46 @@ public static class ControlData
     public static int GetHeghScore()
     {
         return highScore;
+    }
+
+    public static int Unlock()
+    {
+        var num = 1;
+        var hegh = 0;
+        for (int i = 1; i < csvDatas.Count; i++)
+        {
+            if (csvDatas[i][0] == " ")
+            {
+                if(Int32.TryParse(csvDatas[i][1],out int re))
+                {
+                    if (hegh < re)
+                    {
+                        hegh = re;
+                        num = i;
+                    }
+                }
+            }
+        }
+        var grade = csvDatas[num][2];
+        switch (grade)
+        {
+            case "mars":
+                return 1;
+
+            case "earth":
+                return 2;
+
+            case "saturn":
+                return 3;
+
+            case "jupiter":
+                return 4;
+
+            case "sun":
+                return 5;
+
+            default:
+                return 0;
+        }
     }
 }

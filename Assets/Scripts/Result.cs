@@ -111,11 +111,11 @@ public class Result : MonoBehaviour
     }
     public void DecideNext()
     {
-        if (nowArrow == 0)
+        if (nowArrow == 1)
         {
             SceneManager.LoadScene("MainGame");
         }
-        else if (nowArrow == 1)
+        else if (nowArrow == 0)
         {
             SceneManager.LoadScene("Start");
         }

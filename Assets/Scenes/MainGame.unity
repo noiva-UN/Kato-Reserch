@@ -2857,9 +2857,9 @@ MonoBehaviour:
   speechCanvas: {fileID: 1685332463}
   resultCanvas: {fileID: 126185957}
   reviewWindow: {fileID: 1153925753}
-  _optionArrow: {fileID: 1685819000}
+  _optionArrow: {fileID: 957668696}
   arrowMove: 137
-  gameTimeSec: 61
+  gameTimeSec: 10
   addBonusTime: 1
   timeText: {fileID: 1014614546}
   starText: {fileID: 886533769}
@@ -2974,7 +2974,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -197, y: 90}
+  m_AnchoredPosition: {x: -249, y: 90}
   m_SizeDelta: {x: 36, y: 78}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1111198674
