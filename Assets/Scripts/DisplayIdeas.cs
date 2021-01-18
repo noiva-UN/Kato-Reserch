@@ -275,7 +275,7 @@ public class DisplayIdeas : MonoBehaviour
         var some2 = ideas[2].Substring(1);
         var do2 = ideas[3].Substring(2);
 
-        Debug.Log(some1 + " " + do1 + " " + some2 + " " + do2);
+        //Debug.Log(some1 + " " + do1 + " " + some2 + " " + do2);
 
         if (CheckFavo(fullidea))
         {

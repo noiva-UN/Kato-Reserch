@@ -57,20 +57,20 @@ public class Result : MonoBehaviour
         ideaNumText.text = ideaNum.ToString();
 
         GameObject grade;
-        var g = 0;
-        if (score < marsLimit)
+        var g = 1;
+        if (score <= marsLimit)
         {
             grade = mars;
             g = 2;
-        } else if (score < earthLimit)
+        } else if (score <= earthLimit)
         {
             grade = earth;
             g = 2;
-        } else if (score < saturnLimit)
+        } else if (score <= saturnLimit)
         {
             grade= saturn;
             g = 2;
-        } else if (score < jupiterLimit)
+        } else if (score <= jupiterLimit)
         {
             grade= jupiter;
             g = 3;
@@ -88,6 +88,7 @@ public class Result : MonoBehaviour
         if (ControlData.Unlock(g))
         {
             newmodeCom.SetActive(true);
+            newrecord.SetActive(true);
         } else if (record)
         {
             newrecord.SetActive(true);

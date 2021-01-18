@@ -3176,7 +3176,7 @@ MonoBehaviour:
   EndWinTime: 4
   countText: {fileID: 1922816127}
   highText: {fileID: 975969159}
-  nextTime: {fileID: 0}
+  nextTime: {fileID: 693761280}
   gameTimeSec: 10
   addBonusTime: 1
   timeText: {fileID: 1014614546}

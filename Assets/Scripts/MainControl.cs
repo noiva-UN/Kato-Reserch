@@ -178,12 +178,16 @@ public class MainControl : MonoBehaviour
     {
         if (gameTimeSec - _mathTime <= 30 && halfMinute == false)
         {
+            _speechBalloons.CommentDisable();
             _speechBalloons.Comment(SpeechBalloons.comentType.halfMinute, false);
+            Debug.Log("30");
             halfMinute = true;
         }
         else if (gameTimeSec - _mathTime <= 60 && oneMinute == false)
         {
+            _speechBalloons.CommentDisable();
             _speechBalloons.Comment(SpeechBalloons.comentType.oneMinute, false);
+            Debug.Log("60");
             oneMinute = true;
         }
 
@@ -218,10 +222,12 @@ public class MainControl : MonoBehaviour
     {
         if(gameTimeSec-_mathTime <= 30 && halfMinute == false)
         {
+            _speechBalloons.CommentDisable();
             _speechBalloons.Comment(SpeechBalloons.comentType.halfMinute, true);
             halfMinute = true;
         }else if (gameTimeSec - _mathTime <= 60 && oneMinute == false)
         {
+            _speechBalloons.CommentDisable();
             _speechBalloons.Comment(SpeechBalloons.comentType.oneMinute, true);
             oneMinute = true;
         }
@@ -346,7 +352,6 @@ public class MainControl : MonoBehaviour
                 }
                 _optionArrow.gameObject.transform.localPosition = new Vector3(_optionArrow.gameObject.transform.localPosition.x, _optionArrow.gameObject.transform.localPosition.y - move, _optionArrow.gameObject.transform.localPosition.z);
             }
-
         }        
     }
 
@@ -359,10 +364,12 @@ public class MainControl : MonoBehaviour
                 endWin.SetActive(false);
 
                 ReviewRule.SetActive(true);
+
+                inputCanvas.SetActive(false);
                 return;
             }
             _mathTime -= Time.deltaTime;
-            nextTime.text = _mathTime.ToString("n2");
+            nextTime.text ="Next " + _mathTime.ToString("n2");
         }
         else
         {
@@ -468,10 +475,12 @@ public class MainControl : MonoBehaviour
             if (_mainState == MainState.inputing)
             {
                 _inputText.TimeUp();
+                
             }
 
             ControlData.Initialized(ControlData.filetype.favorite);
 
+            
             _mainState = MainState.mainend;
             endWin.SetActive(true);
             _mathTime = EndWinTime;

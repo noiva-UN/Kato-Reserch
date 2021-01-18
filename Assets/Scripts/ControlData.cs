@@ -8,7 +8,7 @@ public static class ControlData
 {
     private static string path, UserName;
     //private static int count;//第n回か
-    private static int highScore, lastScore = 0;
+    private static int highScore=0, lastScore = 0;
 
     private static List<string[]> csvDatas = new List<string[]>();
     private static List<string[]> favoDatas = new List<string[]>();
@@ -46,13 +46,11 @@ public static class ControlData
             var hegh = 0;
             for(int i = 1; i < csvDatas.Count; i++)
             {
-                if (csvDatas[i][0] == " ")
+                if (5 <= csvDatas[i].Length)
                 {
                     if (type == filetype.normal)
-                    {
-                        i++;
-                        if (csvDatas.Count <= i) break; 
-                        if (Int32.TryParse(csvDatas[i][2], out int h))
+                    { 
+                        if (Int32.TryParse(csvDatas[i][1], out int h))
                         {
                             if (hegh < h)
                             {
@@ -98,16 +96,19 @@ public static class ControlData
         }
         var sw = new StreamWriter(path + "/" + type.ToString() + ".csv", true, Encoding.GetEncoding("UTF-8"));
 
-
         sw.WriteLine(s2);
         sw.Close();
 
-        Debug.Log("Save Completed");
+       // Debug.Log("Save Completed");
     }
     public static void CSVAddWrite(int data1, string data2, filetype type)
     {
         var s2 = " ," + data1.ToString() + "," + data2 +","+ ",end";
         lastScore = data1;
+        if (highScore < data1)
+        {
+            highScore = data1;
+        }
         inGameDatas.Add(s2.Split(','));
         var sw = new StreamWriter(path + "/" + type.ToString() + ".csv", true, Encoding.GetEncoding("UTF-8"));
 
@@ -115,7 +116,7 @@ public static class ControlData
         sw.WriteLine(s2);
         sw.Close();
 
-        Debug.Log("Save Completed");
+       // Debug.Log("Save Completed");
 
         EndGame();
     }
@@ -303,7 +304,7 @@ public static class ControlData
 
     public static bool Unlock(int score)
     {
-        if (csvDatas.Count <= 0) return false;
+        if (csvDatas.Count <= 0) return true;
 
         var num = 0;
         var hegh = 0;
@@ -324,6 +325,7 @@ public static class ControlData
 
         var grade = csvDatas[num][2];
         var now = 0;
+
         switch (grade)
         {
             case "mars":

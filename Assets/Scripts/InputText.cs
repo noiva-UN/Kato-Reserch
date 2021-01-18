@@ -13,7 +13,9 @@ public class InputText : MonoBehaviour
     private int _entryNum = 0;
     private bool _changeNum = false, _interruption = false;
 
-   // [SerializeField] private GameObject _navi;
+    private bool end = false;
+
+    // [SerializeField] private GameObject _navi;
 
     public void Initialized()
     {
@@ -33,10 +35,15 @@ public class InputText : MonoBehaviour
 
     public IEnumerator InputControl(Action<bool, string[]> action)
     {
+        end = false;
         while (true)
         {
-
             yield return StartCoroutine(InputIdea(_entryNum));
+
+            if (end)
+            {
+                yield break;
+            }
 
             if (_interruption)
             {
@@ -95,6 +102,12 @@ public class InputText : MonoBehaviour
 
         while (true)
         {
+            if (end)
+            {
+                fields[ideasNum].DeactivateInputField();
+                yield break;
+            }
+
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 yield return null;
@@ -141,58 +154,11 @@ public class InputText : MonoBehaviour
                 _changeNum = true;
                 yield break;
             }
-
-
-            /*
-            if (Input.GetKeyUp(KeyCode.LeftControl) || Input.GetKeyUp(KeyCode.RightControl))
-            {
-                _navi.SetActive(false);
-            }
-            if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
-            {
-                _navi.SetActive(true);
-            }
-
-            if (_navi.activeSelf)
-            {
-                if (Input.GetKeyDown("1"))
-                {
-                    _entryNum = 0;
-                    _navi.SetActive(false);
-                    _changeNum = true;
-                    yield break;
-
-                }
-                else if (Input.GetKeyDown("2"))
-                {
-                    _entryNum = 1;
-                    _navi.SetActive(false);
-                    _changeNum = true;
-                    yield break;
-
-                }
-                else if (Input.GetKeyDown("3"))
-                {
-                    _entryNum = 2;
-                    _navi.SetActive(false);
-                    _changeNum = true;
-                    yield break;
-                }
-                else if (Input.GetKeyDown("4"))
-                {
-                    _entryNum = 3;
-                    _navi.SetActive(false);
-                    _changeNum = true;
-                    yield break;
-
-                }
-            }*/
             yield return null;
         }
     }
     public void TimeUp()
     {
-        StopAllCoroutines();
-        gameObject.SetActive(false);
+        end = true;
     }
 }
