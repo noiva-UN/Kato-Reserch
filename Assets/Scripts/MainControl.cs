@@ -63,6 +63,7 @@ public class MainControl : MonoBehaviour
         _star = ControlData.FavoriteIdeNum();
         _Score = 0;
         _idea = 0;
+        Debug.Log(_star);
 
         reviewWindow.SetActive(false);
 
@@ -273,7 +274,7 @@ public class MainControl : MonoBehaviour
             ScoresUpdate();
 
             _mainState = MainState.idle;
-            _speechBalloons.CharaActive(false);
+            _speechBalloons.CharaActive(true);
             inputCanvas.SetActive(false);
 
         }
@@ -398,7 +399,7 @@ public class MainControl : MonoBehaviour
             resultCanvas.SetActive(true);
             _result.Initialized();
             _Score += _star * 100;
-            _result.ResultView(_Score, _star, ControlData.GetHeghScore() < _Score, _idea);
+            _result.ResultView(_Score, _star, _idea);
 
             return;
         }
@@ -478,7 +479,7 @@ public class MainControl : MonoBehaviour
                 
             }
 
-            ControlData.Initialized(ControlData.filetype.favorite);
+            
 
             
             _mainState = MainState.mainend;

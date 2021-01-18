@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Result : MonoBehaviour
 {
-    [SerializeField] private Text scoreText, starText, tiemText, ideaNumText;
+    [SerializeField] private Text scoreText, starText, tiemText, ideaNumText, nextGradeText;
     [SerializeField] private GameObject mars, earth, saturn, jupiter, sun;
     [SerializeField] private GameObject lowCom, heghCom, newrecCom, newmodeCom,newrecord;
 
@@ -46,7 +46,7 @@ public class Result : MonoBehaviour
         Arrow.SetActive(false);
     }
 
-    public void ResultView(int score, int star, bool record, int ideaNum)
+    public void ResultView(int score, int star, int ideaNum)
     {
         scoreText.text = score.ToString("N0");
         starText.text = star.ToString();
@@ -62,23 +62,28 @@ public class Result : MonoBehaviour
         {
             grade = mars;
             g = 2;
+            nextGradeText.text = "地球級まで:" + (marsLimit - score).ToString("N0");
         } else if (score <= earthLimit)
         {
             grade = earth;
             g = 2;
+            nextGradeText.text = "土星級まで:" + (earthLimit - score).ToString("N0");
         } else if (score <= saturnLimit)
         {
             grade= saturn;
             g = 2;
+            nextGradeText.text = "木星級まで:" + (saturnLimit - score).ToString("N0");
         } else if (score <= jupiterLimit)
         {
             grade= jupiter;
             g = 3;
+            nextGradeText.text = "太陽級まで:" + (jupiterLimit - score).ToString("N0");
         }
         else
         {
             grade = sun;
             g = 4;
+            nextGradeText.text = "";
         }
 
         grade.SetActive(true);
@@ -89,7 +94,7 @@ public class Result : MonoBehaviour
         {
             newmodeCom.SetActive(true);
             newrecord.SetActive(true);
-        } else if (record)
+        } else if (ControlData.GetHeghScore() <score)
         {
             newrecord.SetActive(true);
             newrecCom.SetActive(true);

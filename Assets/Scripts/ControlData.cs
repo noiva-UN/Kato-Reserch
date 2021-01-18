@@ -39,11 +39,13 @@ public static class ControlData
 
         if (File.Exists(filePath))
         {
-            if (csvDatas.Count <= 0)
+            if (csvDatas.Count <= 0 && type==filetype.normal)
+            {
+                CSVRead(type);
+            }else if (favoDatas.Count <= 0 && type == filetype.favorite)
             {
                 CSVRead(type);
             }
-            var hegh = 0;
             for(int i = 1; i < csvDatas.Count; i++)
             {
                 if (5 <= csvDatas[i].Length)
@@ -52,19 +54,20 @@ public static class ControlData
                     { 
                         if (Int32.TryParse(csvDatas[i][1], out int h))
                         {
-                            if (hegh < h)
+                            if (highScore < h)
                             {
-                                hegh = h;
+                                highScore = h;
                             }
                             lastScore = h;
                         }                      
                     }
                 }                
             }
-            highScore = hegh;
+            Debug.Log(highScore);
+            
 
             var sw = new StreamWriter(filePath, true, Encoding.GetEncoding("UTF-8"));
-            string[] s1 = { " ", "0", hegh.ToString(), " ",data };
+            string[] s1 = { " ", "0", highScore.ToString(), " ",data };
             inGameDatas.Add(s1);
             var s2 = string.Join(",", s1);
             sw.WriteLine(s2);
@@ -93,6 +96,10 @@ public static class ControlData
         if (type == filetype.normal)
         {
             inGameDatas.Add(s2.Split(',')); // , 区切りでリストに追加
+        }
+        else
+        {
+            favoDatas.Add(s2.Split(','));
         }
         var sw = new StreamWriter(path + "/" + type.ToString() + ".csv", true, Encoding.GetEncoding("UTF-8"));
 
@@ -152,14 +159,16 @@ public static class ControlData
     {
         var excl = 0;
 
+        Debug.Log(favoDatas.Count);
         for (int i = 0; i < favoDatas.Count; i++)
         {
-            if (csvDatas[i][0] == " " || csvDatas[i][0] == "○○が")
+            if (5<= csvDatas[i].Length)
             {
                 excl++;
             }
+            
         }
-
+        Debug.Log(excl);
         return favoDatas.Count - excl;
     }
 
@@ -245,6 +254,7 @@ public static class ControlData
     }
     public static int GetHeghScore()
     {
+        Debug.Log(highScore);
         return highScore;
     }
 

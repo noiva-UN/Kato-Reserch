@@ -232,11 +232,12 @@ public class DisplayIdeas : MonoBehaviour
             nowArrow = _displatData[nowPage].Length - 1;
             return;
         }
-        if (_displatData[nowPage][nowArrow] == "")
+        if (_displatData[nowPage][nowArrow] == null)
         {
             nowArrow--;
             return;
         }
+
         var pos = _Arrow.gameObject.transform.localPosition;
         _Arrow.gameObject.transform.localPosition = new Vector3(pos.x, pos.y - _arrowMove, pos.z);
     }
@@ -278,8 +279,7 @@ public class DisplayIdeas : MonoBehaviour
         //Debug.Log(some1 + " " + do1 + " " + some2 + " " + do2);
 
         if (CheckFavo(fullidea))
-        {
-            
+        {     
 
             var match = _favoDatas.FindIndex(idea =>{
                 if (some1 == idea[0] && do1 == idea[1] && some2 == idea[2] && do2 == idea[3]) { 

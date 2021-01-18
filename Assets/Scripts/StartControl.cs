@@ -34,7 +34,7 @@ public class StartControl : MonoBehaviour
         _displaying = null;
 
         ControlData.Initialized(ControlData.filetype.normal);
-
+        ControlData.Initialized(ControlData.filetype.favorite);
         unlock = ControlData.Unlock();
 
         for (int i = 0; i < unlock; i++)
