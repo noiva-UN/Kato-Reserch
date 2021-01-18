@@ -63,8 +63,6 @@ public static class ControlData
                     }
                 }                
             }
-            Debug.Log(highScore);
-            
 
             var sw = new StreamWriter(filePath, true, Encoding.GetEncoding("UTF-8"));
             string[] s1 = { " ", "0", highScore.ToString(), " ",data };
@@ -142,7 +140,7 @@ public static class ControlData
             {
                 string line = reader.ReadLine(); // 一行ずつ読み込み
                 csvDatas.Add(line.Split(',')); // , 区切りでリストに追加
-                //Debug.Log(line.Split(','));
+                //Debug.Log(line.Split(',')[1]);
             }
         }
         else
@@ -261,6 +259,11 @@ public static class ControlData
     public static List<string[]> GetIdeas()
     {
         return csvDatas;
+    }
+
+    public static List<String[]> GetFavo()
+    {
+        return favoDatas;
     }
     public static int GetLastScore()
     {

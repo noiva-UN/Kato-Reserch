@@ -45,18 +45,6 @@ public class DisplayIdeas : MonoBehaviour
         _Arrow.gameObject.SetActive(false);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //Initialized();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void SetIdeaData(string some1, string do1, string some2, string do2)
     {
         if (_texts.Length <= nextLine)
@@ -96,6 +84,7 @@ public class DisplayIdeas : MonoBehaviour
             
         }
         nowPage = maxPage;
+        if (_reviewing) return;
         IdeaDisplayUpdate(nowPage);
     }
 
@@ -103,10 +92,10 @@ public class DisplayIdeas : MonoBehaviour
     {
         for (int i = 0; i < _texts.Length; i++)
         {
-
             _texts[i].text = _displatData[page][i];
             if (!_reviewing) continue;
-            var idea = GetFullIdea(nowPage, nowArrow);
+            if (_texts[i].text == null|| _texts[i].text == "") continue;
+            var idea = GetFullIdea(nowPage, i);
 
             if (CheckFavo(idea))
             {
@@ -122,6 +111,11 @@ public class DisplayIdeas : MonoBehaviour
     public void Reading()
     {
         _reviewing = true;
+    }
+
+    public void SetFavoData(List<string[]> data)
+    {
+        _favoDatas = data;
     }
 
     public void BackPageIdeaDisplay()
@@ -158,11 +152,11 @@ public class DisplayIdeas : MonoBehaviour
 
     private bool CheckFavo(string idea)
     {
-
+        Debug.Log(_favoDatas.Count);
         for (int i = 0; i < _favoDatas.Count; i++)
         {
             var favo = "「" + _favoDatas[i][0] + "」を「" + _favoDatas[i][1] + "」「" + _favoDatas[i][2] + "」を「" + _favoDatas[i][3] + "」ゲーム";
-
+            Debug.Log(favo);
             if (idea == favo)
             {
                 return true;
@@ -175,15 +169,14 @@ public class DisplayIdeas : MonoBehaviour
 
     private string GetFullIdea (int page, int num)
     {
-        var idea = _displatData[page][num];
+        string idea = _displatData[page][num];        
 
-        if (idea.Substring(idea.Length - 2) == "ム")
+        if (idea.Substring(idea.Length - 1) == "ム")
         {//最後が～ゲームで終わっていて
             if (num == 0)
             {//一行目→1行で完結している
 
-            }
-            if (_displatData[page][num - 1].Substring(idea.Length - 2) == "ム")
+            }else  if (_displatData[page][num - 1].Substring(_displatData[page][num - 1].Length - 1) == "ム")
             { //上の行も～ゲームで終わっている→1行で完結している
 
 

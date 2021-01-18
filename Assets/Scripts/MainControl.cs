@@ -300,7 +300,7 @@ public class MainControl : MonoBehaviour
                     //タイトル行きの処理
                     ControlData.CSVAddWrite(0, "", ControlData.filetype.normal);
                     SceneManager.LoadScene("Start");
-                    ControlData.Initialized(ControlData.filetype.normal);
+                    //ControlData.Initialized(ControlData.filetype.normal);
                     
                     break;
                 case 1:
