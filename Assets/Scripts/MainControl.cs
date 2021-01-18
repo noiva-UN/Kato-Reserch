@@ -10,7 +10,8 @@ public class MainControl : MonoBehaviour
     //public string userName = "noiva";
     private string _filePath;
 
-    [SerializeField] private GameObject inputCanvas, dispayCanvas, optionCanvas, speechCanvas, resultCanvas;
+    [SerializeField] private GameObject inputCanvas, dispayCanvas, optionCanvas, 
+        speechCanvas, resultCanvas, countDownWin, mainRuleWin, endWin, ReviewRule;
     private InputText _inputText;
     private DisplayIdeas _diplayIdeas;
     private SpeechBalloons _speechBalloons;
@@ -19,6 +20,8 @@ public class MainControl : MonoBehaviour
     [SerializeField] private Image _optionArrow;
     [SerializeField] private float arrowMove = 137;
     private int _optionNum = 1;
+    [SerializeField] private int countDown = 3, EndWinTime = 4;
+    [SerializeField] private Text countText, highText, nextTime;
 
     private bool _inputing = false;
     private string[] _inputIdea= new string[4];
@@ -34,14 +37,16 @@ public class MainControl : MonoBehaviour
 
     private enum MainState
     {
+        opning,
         idle,
         inputing,
         waiting,
+        mainend,
         review,
         result,
         nextchoice
     }
-    private MainState _mainState = MainState.idle;
+    private MainState _mainState = MainState.opning;
 
 
     public void setName(string name)
@@ -72,6 +77,7 @@ public class MainControl : MonoBehaviour
         ScoresUpdate();
 
         _diplayIdeas = dispayCanvas.GetComponent<DisplayIdeas>();
+        _diplayIdeas.Initialized();
 
         _speechBalloons = speechCanvas.GetComponent<SpeechBalloons>();
 
@@ -79,12 +85,24 @@ public class MainControl : MonoBehaviour
         resultCanvas.SetActive(false);
 
         _mathTime = 0;
+        mainRuleWin.SetActive(true);
+
+        _mainState = MainState.opning;
+
+        _speechBalloons.CharaActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch(_mainState){
+
+
+        switch (_mainState)
+        {
+            case MainState.opning:
+                Opning();
+                break;
+
             case MainState.idle:
                 IdleUpdate();
 
@@ -95,6 +113,11 @@ public class MainControl : MonoBehaviour
                 break;
             case MainState.waiting:
                 WaitngUpdate();
+
+                break;
+
+            case MainState.mainend:
+                MainEnd();
 
                 break;
             case MainState.review:
@@ -116,6 +139,39 @@ public class MainControl : MonoBehaviour
         }
 
     }
+
+    #region opning
+
+    private void Opning()
+    {
+        if (mainRuleWin.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                mainRuleWin.SetActive(false);
+                countDownWin.SetActive(true);
+                highText.text = "ハイスコア:" + ControlData.GetHeghScore();
+                _mathTime = countDown;
+            }
+        }
+        else
+        {
+            if (_mathTime <= 0)
+            {
+                _mathTime = 0;
+                countDownWin.SetActive(false);
+                _speechBalloons.CharaActive(true);
+                _mainState = MainState.idle;
+            }
+            else
+            {
+                _mathTime -= Time.deltaTime;
+                countText.text = Mathf.CeilToInt(_mathTime).ToString();
+            }
+        }
+    }
+
+    #endregion
 
     #region idle
     private void IdleUpdate()
@@ -214,13 +270,6 @@ public class MainControl : MonoBehaviour
             _speechBalloons.CharaActive(false);
             inputCanvas.SetActive(false);
 
-        }else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            _diplayIdeas.BackPageIdeaDisplay();
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            _diplayIdeas.NextPageIdeaDisplay();
         }
         TimeMath();
     }
@@ -249,9 +298,12 @@ public class MainControl : MonoBehaviour
                     break;
                 case 1:
                     //ギブアップの処理
-                    _mainState = MainState.review;
-                    _diplayIdeas.ReviewSetUp();
                     optionCanvas.SetActive(false);
+
+                    _mainState = MainState.mainend;
+                    endWin.SetActive(true);
+                    _mathTime = EndWinTime;
+
                     Debug.Log("giv");
                     break;
 
@@ -296,6 +348,36 @@ public class MainControl : MonoBehaviour
             }
 
         }        
+    }
+
+    private void MainEnd()
+    {
+        if (endWin.activeSelf)
+        {
+            if (_mathTime <= 0)
+            {
+                endWin.SetActive(false);
+
+                ReviewRule.SetActive(true);
+                return;
+            }
+            _mathTime -= Time.deltaTime;
+            nextTime.text = _mathTime.ToString("n2");
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                ReviewRule.SetActive(false);
+                _mainState = MainState.review;
+                _star = 0;
+                reviewWindow.SetActive(true);
+                starText.text = _star.ToString();
+                scoreText.gameObject.SetActive(false);
+                timeText.gameObject.SetActive(false);
+                _diplayIdeas.ReviewSetUp();
+            }
+        }
     }
 
     private void ReviewUpdate()
@@ -390,15 +472,9 @@ public class MainControl : MonoBehaviour
 
             ControlData.Initialized(ControlData.filetype.favorite);
 
-            _star = 0;
-            reviewWindow.SetActive(true);
-            starText.text = _star.ToString();
-            scoreText.gameObject.SetActive(false);
-            timeText.gameObject.SetActive(false);
-
-            _mainState = MainState.review;
-
-            _diplayIdeas.ReviewSetUp();
+            _mainState = MainState.mainend;
+            endWin.SetActive(true);
+            _mathTime = EndWinTime;
 
             return;
         }

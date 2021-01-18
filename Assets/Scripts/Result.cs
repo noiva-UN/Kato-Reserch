@@ -57,28 +57,50 @@ public class Result : MonoBehaviour
         ideaNumText.text = ideaNum.ToString();
 
         GameObject grade;
-
+        var g = 0;
         if (score < marsLimit)
         {
             grade = mars;
-
+            g = 2;
         } else if (score < earthLimit)
         {
             grade = earth;
+            g = 2;
         } else if (score < saturnLimit)
         {
             grade= saturn;
+            g = 2;
         } else if (score < jupiterLimit)
         {
             grade= jupiter;
+            g = 3;
         }
         else
         {
             grade = sun;
+            g = 4;
         }
 
         grade.SetActive(true);
-        if (record) newrecord.SetActive(true);
+
+        var last = ControlData.GetLastScore();
+
+        if (ControlData.Unlock(g))
+        {
+            newmodeCom.SetActive(true);
+        } else if (record)
+        {
+            newrecord.SetActive(true);
+            newrecCom.SetActive(true);
+
+        }else if(last< score)
+        {
+            heghCom.SetActive(true);
+        }
+        else
+        {
+            lowCom.SetActive(true);
+        }
 
         ControlData.CSVAddWrite(score, grade.name, ControlData.filetype.normal);
     }
@@ -113,7 +135,6 @@ public class Result : MonoBehaviour
     {
         if (nowArrow == 1)
         {
-            ControlData.Initialized(ControlData.filetype.normal);
             SceneManager.LoadScene("MainGame");
         }
         else if (nowArrow == 0)

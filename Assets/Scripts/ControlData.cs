@@ -8,7 +8,7 @@ public static class ControlData
 {
     private static string path, UserName;
     //private static int count;//第n回か
-    private static int highScore;
+    private static int highScore, lastScore = 0;
 
     private static List<string[]> csvDatas = new List<string[]>();
     private static List<string[]> favoDatas = new List<string[]>();
@@ -58,6 +58,7 @@ public static class ControlData
                             {
                                 hegh = h;
                             }
+                            lastScore = h;
                         }                      
                     }
                 }                
@@ -106,7 +107,7 @@ public static class ControlData
     public static void CSVAddWrite(int data1, string data2, filetype type)
     {
         var s2 = " ," + data1.ToString() + "," + data2 +","+ ",end";
-
+        lastScore = data1;
         inGameDatas.Add(s2.Split(','));
         var sw = new StreamWriter(path + "/" + type.ToString() + ".csv", true, Encoding.GetEncoding("UTF-8"));
 
@@ -246,6 +247,15 @@ public static class ControlData
         return highScore;
     }
 
+    public static List<string[]> GetIdeas()
+    {
+        return csvDatas;
+    }
+    public static int GetLastScore()
+    {
+        return lastScore;
+    }
+
     public static int Unlock()
     {
         if (csvDatas.Count <= 0) return 0;
@@ -254,7 +264,7 @@ public static class ControlData
         var hegh = 0;
         for (int i = 0; i < csvDatas.Count; i++)
         {
-            if (csvDatas[i].Length <= 5)
+            if (5 <= csvDatas[i].Length)
             {
                 if(Int32.TryParse(csvDatas[i][1],out int re))
                 {
@@ -289,6 +299,54 @@ public static class ControlData
             default:
                 return 0;
         }
+    }
+
+    public static bool Unlock(int score)
+    {
+        if (csvDatas.Count <= 0) return false;
+
+        var num = 0;
+        var hegh = 0;
+        for (int i = 0; i < csvDatas.Count; i++)
+        {
+            if (5 <= csvDatas[i].Length)
+            {
+                if (Int32.TryParse(csvDatas[i][1], out int re))
+                {
+                    if (hegh < re)
+                    {
+                        hegh = re;
+                        num = i;
+                    }
+                }
+            }
+        }
+
+        var grade = csvDatas[num][2];
+        var now = 0;
+        switch (grade)
+        {
+            case "mars":
+                now = 2;
+                break;
+            case "earth":
+                now = 2;
+                break;
+            case "saturn":
+                now = 2;
+                break;
+            case "jupiter":
+                now = 3;
+                break;
+            case "sun":
+                now = 4;
+                break;
+            default:
+                now = 0;
+                break;
+        }
+
+        return now < score;
     }
 
     public static void EndGame()

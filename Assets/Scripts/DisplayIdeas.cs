@@ -23,7 +23,7 @@ public class DisplayIdeas : MonoBehaviour
 
     [SerializeField] private Color defColor, favoColor;
 
-    private void Initialized()
+    public void Initialized()
     {
         _textWidth = _testText.rectTransform.rect.width;
 
@@ -31,8 +31,8 @@ public class DisplayIdeas : MonoBehaviour
         {
             _texts[i].text = "";
         }
-        _displatData = new List<string[]>();
-        _displatData.Add(new string[] { "", "", "", "", "", "" });
+        _displatData = new List<string[]>();              
+        _displatData.Add(new string[_texts.Length]);
         _favoDatas = new List<string[]>();
         //_favoDatas.Add(new string[] { "", "", "", ""});
 
@@ -48,7 +48,7 @@ public class DisplayIdeas : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Initialized();
+        //Initialized();
     }
 
     // Update is called once per frame
@@ -63,8 +63,8 @@ public class DisplayIdeas : MonoBehaviour
         {
             nextLine = 0;
             maxPage++;
-            nowPage = maxPage;
-            _displatData.Add(new string[] { "", "", "", "", "", "" });
+            //nowPage = maxPage;
+            _displatData.Add(new string[_texts.Length]);
         }
 
         var idea = "「" + some1 + "」を「" + do1 + "」「" + some2 + "」を「" + do2 + "」ゲーム";
@@ -83,8 +83,8 @@ public class DisplayIdeas : MonoBehaviour
                 _displatData[maxPage][nextLine] = "";
                 nextLine = 0;
                 maxPage++;
-                nowPage = maxPage;
-                _displatData.Add(new string[] { "", "", "", "", "", "" });
+                //nowPage = maxPage;
+                _displatData.Add(new string[_texts.Length]);
             }
             var idea1 = "「" + some1 + "」を「" + do1 + "」";
             var idea2 = "「" + some2 + "」を「" + do2 + "」ゲーム";
@@ -93,7 +93,9 @@ public class DisplayIdeas : MonoBehaviour
             nextLine++;
             _displatData[maxPage][nextLine] = idea2;
             nextLine++;
+            
         }
+        nowPage = maxPage;
         IdeaDisplayUpdate(nowPage);
     }
 
@@ -117,6 +119,11 @@ public class DisplayIdeas : MonoBehaviour
         }
     }
 
+    public void Reading()
+    {
+        _reviewing = true;
+    }
+
     public void BackPageIdeaDisplay()
     {
         nowPage--;
@@ -130,6 +137,7 @@ public class DisplayIdeas : MonoBehaviour
             {
                 ArrowUp();
             }
+            nowArrow = 0;
         }
     }
     public void NextPageIdeaDisplay()
@@ -144,6 +152,7 @@ public class DisplayIdeas : MonoBehaviour
             {
                 ArrowUp();
             }
+            nowArrow = 0;
         }
     }
 

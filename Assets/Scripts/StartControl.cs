@@ -109,7 +109,7 @@ public class StartControl : MonoBehaviour
                 break;
             
             case 1:
-                //閲覧モード
+                SceneManager.LoadScene("ReadingMode");
                 break;
             
             case 2:
