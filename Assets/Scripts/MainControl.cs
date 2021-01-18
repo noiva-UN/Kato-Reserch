@@ -143,6 +143,7 @@ public class MainControl : MonoBehaviour
             inputCanvas.SetActive(true);
             _inputing = true;
             _speechBalloons.CommentDisable();
+            _speechBalloons.CharaActive(false);
             StartCoroutine(_inputText.InputControl((r, s) => (_inputing, _inputIdea) = (r, s)));
 
         }else if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -210,6 +211,7 @@ public class MainControl : MonoBehaviour
             ScoresUpdate();
 
             _mainState = MainState.idle;
+            _speechBalloons.CharaActive(false);
             inputCanvas.SetActive(false);
 
         }else if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -240,13 +242,16 @@ public class MainControl : MonoBehaviour
             {
                 case 2:
                     //タイトル行きの処理
-                    SceneManager.LoadScene("MainGame");
-                    Debug.Log("title");
+                    ControlData.CSVAddWrite(0, "", ControlData.filetype.normal);
+                    SceneManager.LoadScene("Start");
+                    ControlData.Initialized(ControlData.filetype.normal);
+                    
                     break;
                 case 1:
                     //ギブアップの処理
                     _mainState = MainState.review;
                     _diplayIdeas.ReviewSetUp();
+                    optionCanvas.SetActive(false);
                     Debug.Log("giv");
                     break;
 
@@ -383,13 +388,15 @@ public class MainControl : MonoBehaviour
                 _inputText.TimeUp();
             }
 
-            _mainState = MainState.review;
+            ControlData.Initialized(ControlData.filetype.favorite);
 
             _star = 0;
             reviewWindow.SetActive(true);
             starText.text = _star.ToString();
             scoreText.gameObject.SetActive(false);
-            ideaNumText.gameObject.SetActive(false);
+            timeText.gameObject.SetActive(false);
+
+            _mainState = MainState.review;
 
             _diplayIdeas.ReviewSetUp();
 

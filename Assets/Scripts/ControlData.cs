@@ -22,6 +22,7 @@ public static class ControlData
 
     public static string Initialized(filetype type)
     {
+
         path = Application.dataPath + "/Resources";
         Directory.CreateDirectory(path);
 
@@ -38,7 +39,10 @@ public static class ControlData
 
         if (File.Exists(filePath))
         {
-            CSVRead(type);
+            if (csvDatas.Count <= 0)
+            {
+                CSVRead(type);
+            }
             var hegh = 0;
             for(int i = 1; i < csvDatas.Count; i++)
             {
@@ -61,10 +65,12 @@ public static class ControlData
             highScore = hegh;
 
             var sw = new StreamWriter(filePath, true, Encoding.GetEncoding("UTF-8"));
-            string[] s1 = { " ", "0", hegh.ToString(), data };
+            string[] s1 = { " ", "0", hegh.ToString(), " ",data };
+            inGameDatas.Add(s1);
             var s2 = string.Join(",", s1);
             sw.WriteLine(s2);
             sw.Close();
+            
             Debug.Log("SaveCSV Completed");
         }
         else
@@ -73,7 +79,8 @@ public static class ControlData
             string fixedFormText = "○○が,××して,□□を,△△する,ゲーム";
             sw.WriteLine(fixedFormText);
 
-            string[]s1 = {" ", "0", "0", data };
+            string[]s1 = {" ", "0", "0", " ",data };
+            inGameDatas.Add(s1);
             var s2 = string.Join(",", s1);
             sw.WriteLine(s2);
             sw.Close();
@@ -98,9 +105,9 @@ public static class ControlData
     }
     public static void CSVAddWrite(int data1, string data2, filetype type)
     {
-        var s2 = " ," + data1.ToString() + "," + data2 + ",end";
+        var s2 = " ," + data1.ToString() + "," + data2 +","+ ",end";
 
-        
+        inGameDatas.Add(s2.Split(','));
         var sw = new StreamWriter(path + "/" + type.ToString() + ".csv", true, Encoding.GetEncoding("UTF-8"));
 
 
@@ -108,10 +115,13 @@ public static class ControlData
         sw.Close();
 
         Debug.Log("Save Completed");
+
+        EndGame();
     }
     private static void CSVRead(filetype type)
     {
         TextAsset csvFile = Resources.Load(type.ToString()) as TextAsset; // Resouces下のCSV読み込み
+
         StringReader reader = new StringReader(csvFile.text);
 
         // , で分割しつつ一行ずつ読み込み
@@ -123,6 +133,7 @@ public static class ControlData
             {
                 string line = reader.ReadLine(); // 一行ずつ読み込み
                 csvDatas.Add(line.Split(',')); // , 区切りでリストに追加
+                //Debug.Log(line.Split(','));
             }
         }
         else
@@ -237,11 +248,13 @@ public static class ControlData
 
     public static int Unlock()
     {
-        var num = 1;
+        if (csvDatas.Count <= 0) return 0;
+
+        var num = 0;
         var hegh = 0;
-        for (int i = 1; i < csvDatas.Count; i++)
+        for (int i = 0; i < csvDatas.Count; i++)
         {
-            if (csvDatas[i][0] == " ")
+            if (csvDatas[i].Length <= 5)
             {
                 if(Int32.TryParse(csvDatas[i][1],out int re))
                 {
@@ -253,26 +266,38 @@ public static class ControlData
                 }
             }
         }
+
         var grade = csvDatas[num][2];
+        //Debug.Log(grade);
         switch (grade)
         {
             case "mars":
-                return 1;
+                return 2;
 
             case "earth":
                 return 2;
 
             case "saturn":
-                return 3;
+                return 2;
 
             case "jupiter":
-                return 4;
+                return 3;
 
             case "sun":
-                return 5;
+                return 4;
 
             default:
                 return 0;
         }
     }
+
+    public static void EndGame()
+    {
+        for (int i = 0; i < inGameDatas.Count; i++)
+        {
+            csvDatas.Add(inGameDatas[i]);
+        }
+        inGameDatas.Clear();
+    }
+
 }

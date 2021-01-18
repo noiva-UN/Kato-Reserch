@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SpeechBalloons : MonoBehaviour
 {
+    [SerializeField] private GameObject chara;
+
     [SerializeField] private GameObject[] _praiseComments;
     [SerializeField] private GameObject[] _adviceComments;
     [SerializeField] private GameObject[] _oneMinuteComent;
@@ -112,5 +114,9 @@ public class SpeechBalloons : MonoBehaviour
 
         _nowComent.SetActive(false);
         _nowComent = null;
+    }
+    public void CharaActive(bool act)
+    {
+        chara.SetActive(act);
     }
 }

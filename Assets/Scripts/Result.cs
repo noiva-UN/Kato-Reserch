@@ -113,6 +113,7 @@ public class Result : MonoBehaviour
     {
         if (nowArrow == 1)
         {
+            ControlData.Initialized(ControlData.filetype.normal);
             SceneManager.LoadScene("MainGame");
         }
         else if (nowArrow == 0)

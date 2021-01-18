@@ -126,7 +126,7 @@ public class DisplayIdeas : MonoBehaviour
 
         if (_reviewing)
         {
-            for (; nowArrow == 0; nowArrow--)
+            for (; nowArrow > 0; nowArrow--)
             {
                 ArrowUp();
             }
@@ -140,7 +140,7 @@ public class DisplayIdeas : MonoBehaviour
 
         if (_reviewing)
         {
-            for (; nowArrow == 0; nowArrow--)
+            for (; nowArrow > 0; nowArrow--)
             {
                 ArrowUp();
             }
@@ -201,16 +201,6 @@ public class DisplayIdeas : MonoBehaviour
         _Arrow.gameObject.SetActive(true);
         nowArrow = 0;
         _reviewing = true;
-        string debug = "";
-        for(int i = 0;i< _displatData.Count; i++)
-        {
-            for(int j = 0; j < _displatData[i].Length; j++)
-            {
-                debug += i+","+j+","+_displatData[i][j]+" \n ";
-            }
-            debug += " \n ";
-        }
-        Debug.Log(debug);
     }
 
     public void ArrowUp()
