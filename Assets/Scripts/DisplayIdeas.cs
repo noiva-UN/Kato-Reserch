@@ -152,11 +152,11 @@ public class DisplayIdeas : MonoBehaviour
 
     private bool CheckFavo(string idea)
     {
-        Debug.Log(_favoDatas.Count);
+        //Debug.Log(_favoDatas.Count);
         for (int i = 0; i < _favoDatas.Count; i++)
         {
             var favo = "「" + _favoDatas[i][0] + "」を「" + _favoDatas[i][1] + "」「" + _favoDatas[i][2] + "」を「" + _favoDatas[i][3] + "」ゲーム";
-            Debug.Log(favo);
+            //Debug.Log(favo);
             if (idea == favo)
             {
                 return true;

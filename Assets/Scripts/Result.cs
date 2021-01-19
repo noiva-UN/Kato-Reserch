@@ -58,22 +58,22 @@ public class Result : MonoBehaviour
 
         GameObject grade;
         var g = 1;
-        if (score <= marsLimit)
+        if (score < marsLimit)
         {
             grade = mars;
             g = 2;
             nextGradeText.text = "地球級まで:" + (marsLimit - score).ToString("N0");
-        } else if (score <= earthLimit)
+        } else if (score < earthLimit)
         {
             grade = earth;
             g = 2;
             nextGradeText.text = "土星級まで:" + (earthLimit - score).ToString("N0");
-        } else if (score <= saturnLimit)
+        } else if (score < saturnLimit)
         {
             grade= saturn;
             g = 2;
             nextGradeText.text = "木星級まで:" + (saturnLimit - score).ToString("N0");
-        } else if (score <= jupiterLimit)
+        } else if (score < jupiterLimit)
         {
             grade= jupiter;
             g = 3;
