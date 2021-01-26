@@ -455,10 +455,10 @@ MonoBehaviour:
   newrecCom: {fileID: 380190200}
   newmodeCom: {fileID: 587098496}
   newrecord: {fileID: 302761427}
-  marsLimit: 1000
-  earthLimit: 2000
-  saturnLimit: 3000
-  jupiterLimit: 4000
+  marsLimit: 5100
+  earthLimit: 7200
+  saturnLimit: 9300
+  jupiterLimit: 15400
   next: {fileID: 410428534}
   Arrow: {fileID: 1111198672}
   ArrowMove: 130
@@ -3257,8 +3257,8 @@ MonoBehaviour:
   countText: {fileID: 1922816127}
   highText: {fileID: 975969159}
   nextTime: {fileID: 693761280}
-  gameTimeSec: 10
-  addBonusTime: 1
+  gameTimeSec: 60
+  addBonusTime: 3.7
   timeText: {fileID: 1014614546}
   starText: {fileID: 886533769}
   scoreText: {fileID: 368402057}

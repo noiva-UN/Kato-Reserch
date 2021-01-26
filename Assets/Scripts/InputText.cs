@@ -20,17 +20,23 @@ public class InputText : MonoBehaviour
     public void Initialized()
     {
         //_navi.SetActive(false);
+        ideas = new string[4] { "", "", "", "" };
         IdeasInitialized();
     }
 
     private void IdeasInitialized()
     {
-        ideas = new string[4] { "", "", "", "" };
+        for(int i = 0; i < ideas.Length; i++)
+        {
+            ideas[i] = "";
+        }
+
         for(int i = 0; i < fields.Length; i++)
         {
             fields[i].text = "";
         }
         _entryNum = 0;
+        gameObject.SetActive(false);
     }
 
     public IEnumerator InputControl(Action<bool, string[]> action)
@@ -49,6 +55,10 @@ public class InputText : MonoBehaviour
             {
                 _interruption = false;
                 action(false, null);
+                yield return null;
+
+                IdeasInitialized();
+                //gameObject.SetActive(false);
                 yield break;
             }
 
@@ -76,7 +86,12 @@ public class InputText : MonoBehaviour
 
             //入力完了後の処理追加
             action(false,ideas);
+
+            yield return null;
+
             IdeasInitialized();
+
+            //gameObject.SetActive(false);
 
             yield break;
         }
@@ -121,13 +136,14 @@ public class InputText : MonoBehaviour
                 yield return null;
                 fields[ideasNum].DeactivateInputField();
                 ideas[ideasNum] = fields[ideasNum].text;
-
+                /*
                 string debug = "";
                 for(int i = 0; i < ideas.Length; i++)
                 {
                     debug += i + "番目に" + ideas[i] + "が、　";
                 }
-                //Debug.Log(debug);
+                Debug.Log(debug);
+                */
                 yield break;       
             }
 

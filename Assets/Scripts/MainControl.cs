@@ -63,7 +63,7 @@ public class MainControl : MonoBehaviour
         _star = ControlData.FavoriteIdeNum();
         _Score = 0;
         _idea = 0;
-        Debug.Log(_star);
+        //Debug.Log(_star);
 
         reviewWindow.SetActive(false);
 
@@ -72,7 +72,7 @@ public class MainControl : MonoBehaviour
 
         _inputText = inputCanvas.GetComponent<InputText>();
         _inputText.Initialized();
-        inputCanvas.SetActive(false);
+        //inputCanvas.SetActive(false);
         //StartCoroutine(Inputidea());
 
         ScoresUpdate();
@@ -90,7 +90,7 @@ public class MainControl : MonoBehaviour
 
         _mainState = MainState.opning;
 
-        _speechBalloons.CharaActive(false);
+        //_speechBalloons.CharaActive(false);
     }
 
     // Update is called once per frame
@@ -181,14 +181,14 @@ public class MainControl : MonoBehaviour
         {
             _speechBalloons.CommentDisable();
             _speechBalloons.Comment(SpeechBalloons.comentType.halfMinute, false);
-            Debug.Log("30");
+            //Debug.Log("30");
             halfMinute = true;
         }
         else if (gameTimeSec - _mathTime <= 60 && oneMinute == false)
         {
             _speechBalloons.CommentDisable();
             _speechBalloons.Comment(SpeechBalloons.comentType.oneMinute, false);
-            Debug.Log("60");
+            //Debug.Log("60");
             oneMinute = true;
         }
 
@@ -241,7 +241,8 @@ public class MainControl : MonoBehaviour
             if (_inputIdea == null)
             {
                 _mainState = MainState.idle;
-                inputCanvas.SetActive(false);
+                _speechBalloons.CharaActive(true);
+                //inputCanvas.SetActive(false);
                 return;
             }                  
 
@@ -275,7 +276,16 @@ public class MainControl : MonoBehaviour
 
             _mainState = MainState.idle;
             _speechBalloons.CharaActive(true);
-            inputCanvas.SetActive(false);
+            
+            if(30 <= gameTimeSec - _mathTime)
+            {
+                halfMinute = false;
+            }
+            if (60 <= gameTimeSec - _mathTime)
+            {
+                oneMinute = false;
+            }
+            //inputCanvas.SetActive(false);
 
         }
         TimeMath();

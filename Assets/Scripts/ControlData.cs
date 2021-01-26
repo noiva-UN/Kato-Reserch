@@ -157,7 +157,7 @@ public static class ControlData
     {
         var excl = 0;
 
-        Debug.Log(favoDatas.Count);
+        //Debug.Log(favoDatas.Count);
         for (int i = 0; i < favoDatas.Count; i++)
         {
             if (5<= csvDatas[i].Length)
@@ -166,7 +166,7 @@ public static class ControlData
             }
             
         }
-        Debug.Log(excl);
+        //Debug.Log(excl);
         return favoDatas.Count - excl;
     }
 
@@ -252,7 +252,7 @@ public static class ControlData
     }
     public static int GetHeghScore()
     {
-        Debug.Log(highScore);
+       // Debug.Log(highScore);
         return highScore;
     }
 
@@ -302,7 +302,7 @@ public static class ControlData
                 return 2;
 
             case "saturn":
-                return 2;
+                return 3;
 
             case "jupiter":
                 return 3;
