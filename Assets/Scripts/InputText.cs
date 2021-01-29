@@ -15,6 +15,8 @@ public class InputText : MonoBehaviour
 
     private bool end = false;
 
+    private bool inputing = true;
+
     // [SerializeField] private GameObject _navi;
 
     public void Initialized()
@@ -44,6 +46,7 @@ public class InputText : MonoBehaviour
         end = false;
         while (true)
         {
+            inputing = true;
             yield return StartCoroutine(InputIdea(_entryNum));
 
             if (end)
@@ -131,10 +134,10 @@ public class InputText : MonoBehaviour
             }
 
 
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (inputing == false)
             {
                 yield return null;
-                fields[ideasNum].DeactivateInputField();
+                //fields[ideasNum].DeactivateInputField();
                 ideas[ideasNum] = fields[ideasNum].text;
                 /*
                 string debug = "";
@@ -176,5 +179,11 @@ public class InputText : MonoBehaviour
     public void TimeUp()
     {
         end = true;
+    }
+
+
+    public void EndInput()
+    {
+        inputing = false;
     }
 }

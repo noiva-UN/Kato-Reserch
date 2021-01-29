@@ -321,6 +321,13 @@ public class MainControl : MonoBehaviour
                     endWin.SetActive(true);
                     _mathTime = EndWinTime;
 
+                    _star = 0;
+                    reviewWindow.SetActive(true);
+                    starText.text = _star.ToString();
+                    scoreText.gameObject.SetActive(false);
+                    timeText.gameObject.SetActive(false);
+                    _diplayIdeas.ReviewSetUp();
+
                     Debug.Log("giv");
                     break;
 
@@ -388,12 +395,7 @@ public class MainControl : MonoBehaviour
             {
                 ReviewRule.SetActive(false);
                 _mainState = MainState.review;
-                _star = 0;
-                reviewWindow.SetActive(true);
-                starText.text = _star.ToString();
-                scoreText.gameObject.SetActive(false);
-                timeText.gameObject.SetActive(false);
-                _diplayIdeas.ReviewSetUp();
+                
             }
         }
     }
@@ -495,6 +497,14 @@ public class MainControl : MonoBehaviour
             _mainState = MainState.mainend;
             endWin.SetActive(true);
             _mathTime = EndWinTime;
+
+
+            _star = 0;
+            reviewWindow.SetActive(true);
+            starText.text = _star.ToString();
+            scoreText.gameObject.SetActive(false);
+            timeText.gameObject.SetActive(false);
+            _diplayIdeas.ReviewSetUp();
 
             return;
         }

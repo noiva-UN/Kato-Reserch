@@ -160,9 +160,9 @@ public static class ControlData
         //Debug.Log(favoDatas.Count);
         for (int i = 0; i < favoDatas.Count; i++)
         {
-            if (5<= csvDatas[i].Length)
+            if (5<= favoDatas[i].Length)
             {
-                excl++;
+                excl++;            
             }
             
         }
