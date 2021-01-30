@@ -113,18 +113,19 @@ public class StartControl : MonoBehaviour
                 break;
             
             case 1:
+                return How2EMS;
 
+
+            case 2:
+                return ideaTrick1;
+
+
+            case 3:
+                
                 ControlData.Initialized(ControlData.filetype.favorite);
                 SceneManager.LoadScene("ReadingMode");
                 break;
-            
-            case 2:
 
-                return How2EMS;
-       
-            case 3:
-                return ideaTrick1;
-            
             case 4:
                 return ideaTrick2;
             
