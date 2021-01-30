@@ -142,7 +142,7 @@ public class DisplayIdeas : MonoBehaviour
 
         if (_reviewing)
         {
-            for (; nowArrow > 0; nowArrow--)
+            for (; nowArrow > 0;)
             {
                 ArrowUp();
             }

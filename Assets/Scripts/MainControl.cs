@@ -420,10 +420,12 @@ public class MainControl : MonoBehaviour
             if (_diplayIdeas.DecideFavo())
             {
                 _star++;
+                starText.text = _star.ToString();
             }
             else
             {
                 _star--;
+                starText.text = _star.ToString();
             }
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))

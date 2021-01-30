@@ -171,6 +171,7 @@ public class InputText : MonoBehaviour
                     _entryNum = 0;
                 }
                 _changeNum = true;
+                fields[ideasNum].DeactivateInputField();
                 yield break;
             }
             yield return null;

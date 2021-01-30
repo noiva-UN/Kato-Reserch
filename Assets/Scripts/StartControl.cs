@@ -34,7 +34,6 @@ public class StartControl : MonoBehaviour
         _displaying = null;
 
         ControlData.Initialized(ControlData.filetype.normal);
-        ControlData.Initialized(ControlData.filetype.favorite);
         unlock = ControlData.Unlock();
 
         for (int i = 0; i < unlock; i++)
@@ -105,10 +104,17 @@ public class StartControl : MonoBehaviour
         switch (pos)
         {
             case 0:
+                string[] s1 = { " ", "0", ControlData.GetHeghScore().ToString(), " ", "start" };
+                ControlData.CSVAddWrite(s1, ControlData.filetype.normal);
+
+
+                ControlData.Initialized(ControlData.filetype.favorite);
                 SceneManager.LoadScene("MainGame");
                 break;
             
             case 1:
+
+                ControlData.Initialized(ControlData.filetype.favorite);
                 SceneManager.LoadScene("ReadingMode");
                 break;
             

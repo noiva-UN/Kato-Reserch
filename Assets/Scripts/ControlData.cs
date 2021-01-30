@@ -39,19 +39,21 @@ public static class ControlData
 
         if (File.Exists(filePath))
         {
-            if (csvDatas.Count <= 0 && type==filetype.normal)
-            {
-                CSVRead(type);
-            }else if (favoDatas.Count <= 0 && type == filetype.favorite)
+            if (csvDatas.Count <= 0 && type == filetype.normal)
             {
                 CSVRead(type);
             }
-            for(int i = 1; i < csvDatas.Count; i++)
+            else if (favoDatas.Count <= 0 && type == filetype.favorite)
+            {
+                CSVRead(type);
+            }
+
+            for (int i = 1; i < csvDatas.Count; i++)
             {
                 if (5 <= csvDatas[i].Length)
                 {
                     if (type == filetype.normal)
-                    { 
+                    {
                         if (Int32.TryParse(csvDatas[i][1], out int h))
                         {
                             if (highScore < h)
@@ -59,19 +61,20 @@ public static class ControlData
                                 highScore = h;
                             }
                             lastScore = h;
-                        }                      
+                        }
                     }
-                }                
+                }
             }
-
+            /*
             var sw = new StreamWriter(filePath, true, Encoding.GetEncoding("UTF-8"));
-            string[] s1 = { " ", "0", highScore.ToString(), " ",data };
+            string[] s1 = { " ", "0", highScore.ToString(), " ", data };
             inGameDatas.Add(s1);
             var s2 = string.Join(",", s1);
             sw.WriteLine(s2);
             sw.Close();
-            
+
             Debug.Log("SaveCSV Completed");
+            */
         }
         else
         {
@@ -79,12 +82,16 @@ public static class ControlData
             string fixedFormText = "○○が,××して,□□を,△△する,ゲーム";
             sw.WriteLine(fixedFormText);
 
+            highScore = 0;
+
+            /*
             string[]s1 = {" ", "0", "0", " ",data };
             inGameDatas.Add(s1);
             var s2 = string.Join(",", s1);
             sw.WriteLine(s2);
             sw.Close();
             Debug.Log("CreateCSV Completed");
+            */
         }
     }
     public static void CSVAddWrite(string[] data, filetype type)
@@ -127,9 +134,12 @@ public static class ControlData
     }
     private static void CSVRead(filetype type)
     {
-        TextAsset csvFile = Resources.Load(type.ToString()) as TextAsset; // Resouces下のCSV読み込み
+        //TextAsset csvFile = Resources.Load(type.ToString()) as TextAsset; // Resouces下のCSV読み込み
 
-        StringReader reader = new StringReader(csvFile.text);
+        var file = new StreamReader(path + "/" + type.ToString() + ".csv");
+
+
+        StringReader reader = new StringReader(file.ReadToEnd());
 
         // , で分割しつつ一行ずつ読み込み
         // リストに追加していく
@@ -151,6 +161,7 @@ public static class ControlData
                 favoDatas.Add(line.Split(',')); // , 区切りでリストに追加
             }
         }
+        reader.Close();
     }
 
     public static int FavoriteIdeNum()
