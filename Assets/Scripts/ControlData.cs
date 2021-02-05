@@ -105,11 +105,12 @@ public static class ControlData
         else
         {
             favoDatas.Add(s2.Split(','));
-        }
-        var sw = new StreamWriter(path + "/" + type.ToString() + ".csv", true, Encoding.GetEncoding("UTF-8"));
+            var sw = new StreamWriter(path + "/" + type.ToString() + ".csv", true, Encoding.GetEncoding("UTF-8"));
 
-        sw.WriteLine(s2);
-        sw.Close();
+            sw.WriteLine(s2);
+            sw.Close();
+        }
+
 
        // Debug.Log("Save Completed");
     }
@@ -122,12 +123,14 @@ public static class ControlData
             highScore = data1;
         }
         inGameDatas.Add(s2.Split(','));
+
+        /*
         var sw = new StreamWriter(path + "/" + type.ToString() + ".csv", true, Encoding.GetEncoding("UTF-8"));
 
 
         sw.WriteLine(s2);
         sw.Close();
-
+        */
        // Debug.Log("Save Completed");
 
         EndGame();
@@ -380,6 +383,12 @@ public static class ControlData
         for (int i = 0; i < inGameDatas.Count; i++)
         {
             csvDatas.Add(inGameDatas[i]);
+
+            var s2 = string.Join(",", inGameDatas[i]);
+            var sw = new StreamWriter(path + "/" + filetype.normal.ToString() + ".csv", true, Encoding.GetEncoding("UTF-8"));
+
+            sw.WriteLine(s2);
+            sw.Close();
         }
         inGameDatas.Clear();
     }

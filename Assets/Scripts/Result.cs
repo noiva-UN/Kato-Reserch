@@ -14,18 +14,7 @@ public class Result : MonoBehaviour
 
     [SerializeField] private GameObject next, Arrow;
     [SerializeField] private float ArrowMove;
-    private int nowArrow = 0;
-
-    void Awake()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    private int nowArrow = 0;   
 
     public void Initialized()
     {

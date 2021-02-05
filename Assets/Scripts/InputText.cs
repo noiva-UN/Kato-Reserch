@@ -136,8 +136,8 @@ public class InputText : MonoBehaviour
 
             if (inputing == false)
             {
-                yield return null;
-                //fields[ideasNum].DeactivateInputField();
+                //yield return null;
+                fields[ideasNum].DeactivateInputField();
                 ideas[ideasNum] = fields[ideasNum].text;
                 /*
                 string debug = "";

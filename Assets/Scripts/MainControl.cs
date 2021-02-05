@@ -96,8 +96,6 @@ public class MainControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
         switch (_mainState)
         {
             case MainState.opning:
